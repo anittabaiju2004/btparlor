@@ -1,0 +1,32 @@
+{% extends 'user/user_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Payment & Booking Details for {{ booking.service.name }}</h2>
+    <hr>
+    <h4>Booking Details</h4>
+    <p><strong>Name:</strong> {{ booking.name }}</p>
+    <p><strong>Email:</strong> {{ booking.email }}</p>
+    <p><strong>Phone:</strong> {{ booking.phone_number }}</p>
+    <p><strong>Date:</strong> {{ booking.booking_date }}</p>
+    <p><strong>Time:</strong> {{ booking.booking_time }}</p>
+    <p><strong>Service:</strong> {{ booking.service.name }}</p>
+    <p><strong>Payment Status:</strong>
+    {% if booking.payment_status %}
+        <span class="badge bg-success display-4" style="font-size:1rem;"><strong>Paid</strong></span>
+    {% else %}
+        <span class="badge bg-danger display-4" style="font-size:1rem;"><strong>Unpaid</strong></span>
+    {% endif %}
+</p>
+
+    <hr>
+    <h4>Payment Details</h4>
+    <p><strong>Cardholder Name:</strong> {{ payment.cardholder_name }}</p>
+    <p><strong>Card Number:</strong> **** **** **** {{ payment.card_number }}</p>
+    <p><strong>CVV:</strong> ***</p>
+    <p><strong>Expiry Date:</strong> {{ payment.expiry_date }}</p>
+    <p><strong>Amount Paid:</strong> ${{ payment.amount }}</p>
+
+    <a href="{% url 'user_bookings' %}" class="btn btn-secondary mt-3">Back to Bookings</a>
+</div>
+{% endblock %}

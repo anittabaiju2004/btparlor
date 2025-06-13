@@ -1,0 +1,16 @@
+<!-- payment_details.html -->
+{% extends 'user/user_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Payment Details for Booking #{{ booking.id }}</h2>
+
+    <p><strong>User:</strong> {{ booking.user.name }}</p>
+    <p><strong>Service:</strong> {{ booking.service.name }}</p>
+    <p><strong>Booking Date:</strong> {{ booking.booking_date }}</p>
+    <p><strong>Booking Time:</strong> {{ booking.booking_time }}</p>
+    <p><strong>Payment Status:</strong> {{ booking.payment_status|yesno:"Paid,Pending" }}</p>
+    <p><strong>Payment Amount:</strong> ${{ booking.payment_amount }}</p> <!-- Assuming you have a payment_amount field -->
+    <p><strong>Payment Method:</strong> {{ booking.payment_method }}</p> <!-- Assuming you have a payment_method field -->
+</div>
+{% endblock %}

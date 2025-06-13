@@ -1,0 +1,34 @@
+{% extends 'admin/admin_index.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Edit Service</h2>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" value="{{ service.name }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Description</label>
+            <textarea name="description" class="form-control" required>{{ service.description }}</textarea>
+        </div>
+        <div class="mb-3">
+            <label>Price</label>
+            <input type="number" name="price" class="form-control" value="{{ service.price }}" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label>Duration (min)</label>
+            <input type="number" name="duration" class="form-control" value="{{ service.duration }}" required>
+        </div>
+        <div class="mb-3">
+            <label>Current Image</label><br>
+            {% if service.image %}
+                <img src="{{ service.image.url }}" width="120" class="mb-2"><br>
+            {% endif %}
+            <input type="file" name="image" class="form-control">
+        </div>
+        <button type="submit" class="btn btn-success">Update Service</button>
+        <a href="{% url 'view_beauty_services' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

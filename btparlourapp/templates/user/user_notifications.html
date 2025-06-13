@@ -1,0 +1,25 @@
+{% extends "user/user_index.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <strong>Notifications</strong>
+        </div>
+        <div class="card-body">
+            {% if notifications %}
+                <ul class="list-group">
+                    {% for notification in notifications %}
+                    <li class="list-group-item">
+                        <strong>{{ notification.message }}</strong><br>
+                        <small class="text-muted">{{ notification.created_at }}</small>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No notifications.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

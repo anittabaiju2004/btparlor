@@ -1,0 +1,49 @@
+{% extends 'admin/admin_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <!-- 1. Send Notification Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Send Important Notification</strong>
+        </div>
+        <div class="card-body">
+            <form method="post" action="{% url 'admin_notifications' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="message" class="form-label">Notification Message</label>
+                    <textarea name="message" id="message" class="form-control" rows="3" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Notification</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2. Sent Notifications Section -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Sent Notifications</strong>
+        </div>
+        <div class="card-body">
+            {% if sent_notifications %}
+                <ul class="list-group">
+                    {% for notification in sent_notifications %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ notification.message }}</strong><br>
+                            <small class="text-muted">{{ notification.created_at }}</small>
+                        </div>
+                        <form method="post" action="{% url 'delete_admin_notification' notification.id %}" style="margin:0;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Delete this notification?');">Delete</button>
+                        </form>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No sent notifications.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

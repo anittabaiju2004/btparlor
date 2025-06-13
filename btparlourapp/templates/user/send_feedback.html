@@ -1,0 +1,89 @@
+{% extends 'user/user_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Send Feedback</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input type="hidden" name="user_id" value="{{ request.session.id }}">
+        <input type="hidden" name="rating" id="rating-input" value="0"> <!-- Default rating is 0 -->
+        <div class="mb-3">
+            <label for="message" class="form-label">Your Feedback</label>
+            <textarea class="form-control" name="message" id="message" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Rating</label>
+            <div id="star-rating" class="d-flex">
+                <span class="star" data-value="1">☆</span>
+                <span class="star" data-value="2">☆</span>
+                <span class="star" data-value="3">☆</span>
+                <span class="star" data-value="4">☆</span>
+                <span class="star" data-value="5">☆</span>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Feedback</button>
+    </form>
+</div>
+
+<hr>
+
+<div class="container mt-4">
+    <h3>All Feedbacks</h3>
+    <div class="list-group">
+        {% for feedback in feedbacks %}
+            <div class="list-group-item mb-2">
+                <div>
+                    <strong>{{ feedback.user.name }}</strong>
+                    <span class="ms-2">
+                        {% for i in "12345"|slice:":feedback.rating"|make_list %}
+                            <span style="color: gold;">&#9733;</span>
+                        {% endfor %}
+                        <!-- {% for i in "12345"|slice:"feedback.rating:"|make_list %}
+                            <span style="color: gold;">&#9734;</span>
+                        {% endfor %} -->
+                        <small class="text-muted">{{ feedback.created_at|date:"Y-m-d H:i" }}</small>
+                    </span>
+                </div>
+                <div>{{ feedback.message|linebreaks }}</div>
+            </div>
+        {% empty %}
+            <div class="alert alert-info">No feedbacks yet.</div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+    .star {
+        font-size: 2rem;
+        color: gold;
+        cursor: pointer;
+        margin-right: 5px;
+    }
+</style>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const stars = document.querySelectorAll(".star");
+        const ratingInput = document.getElementById("rating-input");
+
+        function updateStars(rating) {
+            stars.forEach(star => {
+                if (star.dataset.value <= rating) {
+                    star.textContent = "★"; // Filled star
+                } else {
+                    star.textContent = "☆"; // Empty star
+                }
+            });
+        }
+
+        stars.forEach(star => {
+            star.addEventListener("click", function () {
+                const rating = this.dataset.value;
+                ratingInput.value = rating;
+                updateStars(rating);
+            });
+        });
+
+        updateStars(0); // All stars start empty
+    });
+</script>
+{% endblock %}

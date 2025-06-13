@@ -1,0 +1,41 @@
+<!-- admin_index.html -->
+{% extends 'admin/admin_index.html' %}
+
+{% block content %}
+<h2>Admin Index - View Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ user.name }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.address }}</td>
+            <td>{{ user.phone_number }}</td>
+            <td>{{ user.status }}</td>
+            <td>
+                {% if user.status != 'approved' %}
+                    <a href="{% url 'approve_user' user.id %}" class="btn btn-success">Approve</a>
+                {% endif %}
+                {% if user.status != 'blocked' %}
+                    <a href="{% url 'block_user' user.id %}" class="btn btn-danger">Block</a>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

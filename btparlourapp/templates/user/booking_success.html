@@ -1,0 +1,22 @@
+<!-- booking_success.html -->
+{% extends 'user/user_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Booking Successful!</h2>
+    <p>Your booking has been confirmed. Thank you for choosing our service!</p>
+
+    <h4>Booking Details:</h4>
+    <ul class="list-group">
+        <li class="list-group-item"><strong>Service:</strong> {{ booking.service.name }}</li>
+        <li class="list-group-item"><strong>Booking Date:</strong> {{ booking.booking_date }}</li>
+        <li class="list-group-item"><strong>Booking Time:</strong> {{ booking.booking_time }}</li>
+        <li class="list-group-item"><strong>Name:</strong> {{ booking.name }}</li>
+        <li class="list-group-item"><strong>Email:</strong> {{ booking.email }}</li>
+        <li class="list-group-item"><strong>Phone Number:</strong> {{ booking.phone_number }}</li>
+        <li class="list-group-item"><strong>Payment Status:</strong> {{ booking.payment_status|yesno:"Paid,Pending" }}</li>
+    </ul>
+
+    <a href="{% url 'user_index' %}" class="btn btn-primary mt-3">Go to Dashboard</a>  <!-- Adjust this link as needed -->
+</div>
+{% endblock %}

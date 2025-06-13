@@ -1,0 +1,25 @@
+{% extends 'admin/admin_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Received Notifications</strong>
+        </div>
+        <div class="card-body">
+            {% if received_notifications %}
+                <ul class="list-group">
+                    {% for notification in received_notifications %}
+                    <li class="list-group-item">
+                        <strong>{{ notification.message }}</strong><br>
+                        <small class="text-muted">{{ notification.created_at }}</small>
+                    </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>No received notifications.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'user/user_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Book {{ service.name }}</h2>
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" name="name" class="form-control" value="{{ user.name }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="phone_number" class="form-label">Phone Number</label>
+            <input type="text" name="phone_number" class="form-control" value="{{ user.phone_number }}" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="booking_date" class="form-label">Booking Date</label>
+            <input type="date" name="booking_date" class="form-control" min="{{ today_date }}" required id="booking_date">
+        </div>
+
+        <div class="mb-3">
+            <label for="booking_time" class="form-label">Booking Time</label>
+            <input type="time" name="booking_time" class="form-control" min="10:00" max="22:00" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Confirm Booking</button>
+    </form>
+</div>
+
+<script>
+    // Set min date to today
+    document.addEventListener("DOMContentLoaded", function () {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("booking_date").setAttribute("min", today);
+    });
+</script>
+{% endblock %}

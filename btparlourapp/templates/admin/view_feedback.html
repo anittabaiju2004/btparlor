@@ -1,0 +1,53 @@
+{% extends 'admin/admin_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>User Feedback</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>User Name</th>
+                <th>Message</th>
+                <th>Rating</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for feedback in feedback_list %}
+            <tr>
+                <td>{{ feedback.user.name }}</td>
+                <td>{{ feedback.message }}</td>
+                <td>
+                    {% for i in "12345"|make_list %}
+                        {% if i|add:"0" <= feedback.rating %}
+                            <span class="star-gold">&#9733;</span>
+                        {% else %}
+                            <span class="star-gray">&#9734;</span>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td>{{ feedback.created_at|date:"Y-m-d H:i" }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">No feedback available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<style>
+    td {
+        vertical-align: middle;
+    }
+    .star-gold {
+        color: gold;
+        font-size: 1.2rem;
+    }
+    .star-gray {
+        color: #ccc;
+        font-size: 1.2rem;
+    }
+</style>
+{% endblock %}

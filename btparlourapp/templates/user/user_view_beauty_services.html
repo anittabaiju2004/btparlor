@@ -1,0 +1,49 @@
+{% extends 'user/user_index.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Available Beauty Services</h2>
+
+    <!-- Search Bar -->
+    <div class="mb-4">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search services...">
+    </div>
+
+    <div class="row" id="serviceContainer">
+        {% for service in services %}
+        <div class="col-md-3 mb-3 service-card">
+            <div class="card shadow-sm">
+                <img src="{{ service.image.url }}" class="card-img-top" alt="{{ service.name }}" style="height: 150px; object-fit: cover;">
+                <div class="card-body text-center">
+                    <h6 class="card-title">{{ service.name }}</h6>
+                    <p class="card-text small">{{ service.description }}</p>
+                    <p class="fw-bold">₹{{ service.price }}</p>
+                    <p class="text-muted small">⏳ {{ service.duration }} mins</p>
+                    <a href="{% url 'book_service' service.id %}" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p class="text-center">No beauty services available.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Search Functionality -->
+<script>
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+        let filter = this.value.toLowerCase();
+        let serviceCards = document.querySelectorAll(".service-card");
+
+        serviceCards.forEach(card => {
+            let title = card.querySelector(".card-title").textContent.toLowerCase();
+            if (title.includes(filter)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+</script>
+
+{% endblock %}
